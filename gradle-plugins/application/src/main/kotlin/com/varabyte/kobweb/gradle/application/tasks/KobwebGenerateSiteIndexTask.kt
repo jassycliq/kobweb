@@ -52,6 +52,15 @@ abstract class KobwebGenerateSiteIndexTask @Inject constructor(
             }
         }
 
+        if (project.hasTransitiveJsDependencyNamed("kobweb-silk-icons-mdi")) {
+            kobwebBlock.app.index.head.add {
+                link {
+                    rel = "stylesheet"
+                    href = "https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css"
+                }
+            }
+        }
+
         getResourceFilesJsWithRoots()
                 .mapNotNull{ rootAndFile -> rootAndFile.file.takeIf { !it.isDescendantOf(project.buildDir) && rootAndFile.relativeFile.toUnixSeparators() == "public/index.html"} }
                 .singleOrNull()
